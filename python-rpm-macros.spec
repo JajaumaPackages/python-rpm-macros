@@ -12,7 +12,9 @@ Source0:        macros.python
 Source1:        macros.python-srpm
 Source2:        macros.python2
 Source3:        macros.python3
+%if 0%{?fedora} || 0%{?rhel} > 7
 Source4:        macros.platform-python
+%endif
 
 BuildArch:      noarch
 # For %%python3_pkgversion used in %%python_provide
@@ -49,11 +51,13 @@ Summary:        RPM macros for building Python 3 packages
 %description -n python3-rpm-macros
 RPM macros for building Python 3 packages.
 
+%if 0%{?fedora} || 0%{?rhel} > 7
 %package -n platform-python-rpm-macros
 Summary:        RPM macros for building Platform-Python packages
 
 %description -n platform-python-rpm-macros
 RPM macros for building Platform-Python packages.
+%endif
 
 
 %prep
@@ -62,9 +66,13 @@ RPM macros for building Platform-Python packages.
 
 %install
 mkdir -p %{buildroot}/%{rpmmacrodir}
-install -m 644 %{SOURCE0} %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} \
+install -m 644 %{SOURCE0} %{SOURCE1} %{SOURCE2} %{SOURCE3} \
   %{buildroot}/%{rpmmacrodir}/
 
+%if 0%{?fedora} || 0%{?rhel} > 7
+install -m 644 %{SOURCE4} \
+  %{buildroot}/%{rpmmacrodir}/
+%endif
 
 %files
 %{rpmmacrodir}/macros.python
@@ -78,13 +86,16 @@ install -m 644 %{SOURCE0} %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} \
 %files -n python3-rpm-macros
 %{rpmmacrodir}/macros.python3
 
+%if 0%{?fedora} || 0%{?rhel} > 7
 %files -n platform-python-rpm-macros
 %{rpmmacrodir}/macros.platform-python
+%endif
 
 
 %changelog
 * Sun Sep 03 2017 Jajauma's Packages <jajauma@yandex.ru> - 3-23
 - Provide rpmmacrodir on RHEL
+- Skip macros.platform-python on RHEL
 
 * Wed Aug 02 2017 Tomas Orsava <torsava@redhat.com> - 3-22
 - Add platform-python macros (https://fedoraproject.org/wiki/Changes/Platform_Python_Stack)
