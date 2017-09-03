@@ -1,6 +1,10 @@
+%if 0%{?rhel}
+%define rpmmacrodir %{_rpmconfigdir}/macros.d
+%endif
+
 Name:           python-rpm-macros
 Version:        3
-Release:        22%{?dist}
+Release:        23%{?dist}
 Summary:        The unversioned Python RPM macros
 
 License:        MIT
@@ -79,6 +83,9 @@ install -m 644 %{SOURCE0} %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} \
 
 
 %changelog
+* Sun Sep 03 2017 Jajauma's Packages <jajauma@yandex.ru> - 3-23
+- Provide rpmmacrodir on RHEL
+
 * Wed Aug 02 2017 Tomas Orsava <torsava@redhat.com> - 3-22
 - Add platform-python macros (https://fedoraproject.org/wiki/Changes/Platform_Python_Stack)
 
